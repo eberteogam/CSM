@@ -1,7 +1,10 @@
 # Orchard 2.1.7 Local Environment Setup on Windows - NuGet-based - No Admin Privilege Access
 
 ## Sections
-1. [Install Prerequisite Software](#1-install-prerequisite-software)
+1. Install Prerequisite Software
+    - [With Admin Privileges](#1-install-prerequisite-software)
+    - [With NO Admin Privileges](#1-install-prerequisite-software)
+   
 2. [Verify Installed Versions](#2-verify-installed-versions)
 3. [Building and Running the Solution](#3-building-and-running-the-solution)
 
@@ -9,21 +12,12 @@ This guide provides step-by-step instructions to set up a local development envi
 Orchard 2.1.7 on a Windows system using NuGet. Note that while the software can be installed without admin privileges,
 certain steps, such as adding System Variables may require admin access.
 
-## Requirements
-- [.NET SDK < v8.0](https://dotnet.microsoft.com/en-us/download)
-- [NVM (Node Version Manager) for Windows](https://github.com/coreybutler/nvm-windows/releases).
-  - Node.js < v16.0 (install via NVM)
-  - NPM < v8.0.0 (install via NVM)
-    - Note: NPM is a package manager for Node.js, used to install and manage JavaScript packages.
-  - PNPM < v8.0.0 (install via Corepack)
-    - Note: PNPM is a package manager for Node.js, similar to npm but with a focus on performance and disk space efficiency.
-
 ## Tested Environment
 The local environment has been tested with the following versions:
 - .NET SDK v7.0.301
 - NVM 1.2.2
-  - Node.js v14.17.0
-  - PNPM v7.15.0
+- Node.js v14.17.0
+- PNPM v7.15.0
 
 ## Development guidelines
  - The main branch of the repository is the `dev` branch. Always start your development branch from there and open your pull requests targeting this branch, unless instructed otherwise (e.g., it's part of a larger feature development). 
@@ -31,39 +25,63 @@ The local environment has been tested with the following versions:
  - For a large features (that involves thorough testing and involves other "issue branches") the branch name should be `feature/<short-description>` (e.g., `feature/upgrade-to-1-8`). 
  - Force push is disabled.
 
-## 1. Install Prerequisite Software
-- **Ensure there are no existing Node.js or npm installations on your system.**  If you previously installed Node.js (especially in C:\Program Files), 
-uninstall it and remove any related paths from your system environment variables to avoid conflicts.
-  <br><br>
-- **Install nvm (Node Version Manager)**:
-   - Download and install `nvm-setup.exe` from [nvm-windows releases](https://github.com/coreybutler/nvm-windows/releases).
-     - Ensure that the nvm installation path aims at `C:\Users\$User\AppData\Roaming\nvm`
-     - Symlink???
-    <br><br>
-- Install Node.js and npm using NVM:
-   - Open a new command prompt (cmd) and navigate to the directory where you installed NVM, `C:\Users\$User\AppData\Roaming\nvm`.
-   - Run the following command to install Node.js `< v16.0`:
-     ```bash
-     nvm install 14.17.0
-     ```
-   - Use the installed version:
-     ```bash
-     nvm use 14.17.0
-     ```
-  - This will also install the corresponding version of npm. 
-    - Note: NVM allows you to manage multiple Node.js versions easily.
-    - If you need to switch Node.js versions in the future, you can use `nvm use <version>`.
-  - If npm is not installed automatically, you can install it by running:
-    ```bash
-    nvm install-latest-npm
-    ```
-- **Enable PNPM running the following command**:
-    ```bash
-    corepack enable && corepack prepare pnpm@7.15.0 --activate
-    ```
+# 1. Install Prerequisite Software
+- ## With Admin Privileges
+  - ### Requirements
+    - [.NET SDK < v8.0](https://dotnet.microsoft.com/en-us/download)
+    - [Node.js < v16.0](https://nodejs.org/en/download)
+
+  - ### Installation Steps
+    - Download and install Node.js Windows Installer (.msi) (https://nodejs.org/en/download)
+    - Download and install .NET SDK < v.8.0  (dotnet-sdk.exe) (https://dotnet.microsoft.com/en-us/download)
+    - Once Node.js installation has finished, verify system environment variables are set correctly. Open a command prompt and run the following commands:
+        ```bash
+        node -v
+        npm -v
+        ```
+    - If the commands return the version numbers, Node.js and npm are installed correctly. Otherwise, you may need to add the Node.js installation path to your system environment variables.
+    - After adding the system environment variables, enable PNPM running the following command in an elevated command prompt (run as administrator):
+      ```bash
+      - Corepack enable && corepack prepare pnpm@latest --activate (root access is required)
+
+- ## With NO Admin Privileges
+  - ### Requirements
+    - [.NET SDK < v8.0](https://dotnet.microsoft.com/en-us/download)
+    - [NVM (Node Version Manager) for Windows](https://github.com/coreybutler/nvm-windows/releases).
+      - Node.js < v16.0 (install via NVM)
+      - NPM < v8.0.0 (install via NVM)
+      - PNPM < v8.0.0 (install via Corepack)
+
+  - ### Installation Steps
+    - **Ensure there are no existing Node.js or npm installations on your system.**  If you previously installed Node.js (especially in C:\Program Files), 
+    uninstall it and remove any related paths from your system environment variables to avoid conflicts.
+    - Download and install nvm (Node Version Manager) `nvm-setup.exe` from [nvm-windows releases](https://github.com/coreybutler/nvm-windows/releases).
+    - During the installation process ensure that the nvm installation path aims at `C:\Users\$User\AppData\Roaming\nvm` and keep the same symlink!
+     <br><br>
+      - Install Node.js and npm using NVM:
+        - Open a new command prompt (cmd) and navigate to the directory where you installed NVM, `C:\Users\$User\AppData\Roaming\nvm`.
+        - Run the following command to install Node.js `< v16.0`:
+          ```bash
+          nvm install 14.17.0
+          ```
+        - Use the installed version:
+          ```bash
+          nvm use 14.17.0
+          ```
+       - This will also install the corresponding version of npm. 
+         - Note: NVM allows you to manage multiple Node.js versions easily.
+         - If you need to switch Node.js versions in the future, you can use `nvm use <version>`.
+       - If npm is not installed automatically, you can install it by running:
+         ```bash
+         nvm install-latest-npm
+         ```
+    - **Enable PNPM running the following command**:
+        ```bash
+        corepack enable && corepack prepare pnpm@7.15.0 --activate
+        ```
  
-- **Install .NET SDK**:
-   - Download and install .NET SDK `< v8.0` from [Microsoft .NET](https://dotnet.microsoft.com/en-us/download).
+    - **Install .NET SDK**:
+       - Download and install .NET SDK `< v8.0` from [Microsoft .NET](https://dotnet.microsoft.com/en-us/download).
 
 ## 2. Verify Installed Versions
 - Run the following commands to confirm the correct versions are installed:
