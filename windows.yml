@@ -1,0 +1,37 @@
+services:
+  windows:
+    image: dockurr/windows
+    container_name: windows11CSM
+    environment:
+      VERSION: "11"
+      RAM_SIZE: "16G"
+      CPU_CORES: "8"
+    network_mode: host
+    devices:
+      - /dev/kvm
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+#    ports:
+#      - 8006:8006
+#      - 3389:3389/tcp
+#      - 3389:3389/udp
+#    volumes:
+#      - ./windows:/storage
+    restart: no
+    stop_grace_period: 2m
+
+#| `image`             | Base image for the container (Windows VM via QEMU)       |
+#| `container_name`    | Friendly name for container                              |
+#| `environment`       | Defines settings like Windows version                    |
+#| `devices`           | Grants access to host devices (`/dev/kvm`, etc.)         |
+#| `cap_add`           | Grants extra Linux permissions (like network admin)      |
+#| `ports`             | Opens ports for GUI & RDP access                         |
+#| `volumes`           | Shares a folder between host and VM                      |
+  #  the first ./windows is in reference to your current OS system or whether you have your terminal-filepath on. That's why when I ran the Docker CLI in wsl it created a windows folder in the '~'.  
+  #  and :/storage (second one) will be mapped within the CONTAINER terminal  'storage' folder, not in the host system nor in wsl terminal. 
+  #  if volumes are not declared, a new volume will be created only within the container terminal, not in the host system.
+#  'restart`           | Ensures the current container or VM always runs or reboots automatically as soon Docker is opened when restarting your computer, if set to `no` it will not restart automatically |
+#| `stop_grace_period` | Gives Windows time to shut down cleanly                  |
+  PS C:\CSM> docker compose -p windows.yml up
+invalid project name "windows.yml": must consist only of lowercase alphanumeric characters, hyphens, and underscores as well as start with a letter or number
