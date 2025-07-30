@@ -41,38 +41,39 @@ The current setup versions have been used to develop and test the project succes
 - Download and install`nvm-setup.exe` (Node Version Manager) from [nvm-windows releases](https://github.com/coreybutler/nvm-windows/releases).
   - Execute the `nvm-setup.exe` installer. [^1]
   - **License Agreement:** Accept the license agreement and click `Next`.
-  - **Select Destination Location:** Select the installation path as `C:\Users\$User\AppData\Roaming\nvm` (where `$User` is your Windows username). This is crucial for the correct functioning of NVM.
+  - **Select Destination Location:** Select the installation path as `C:\Users\$User\AppData\Roaming\nvm` (where `$User` is your non-admin Windows username). 
+    - **Do not use the admin user's AppData folder, as this will cause permission issues.** 
   - **Active Version Location:** Leave the symlink path as default `C:\nvm4w\nodejs`.
   - **Desktop Notification:** Select whether you want a desktop notifications or not, this is optional, it won't affect the installation.
   - **Author Progress Email:** You can leave this field empty or fill it with your email address, this is optional, it won't affect the installation.
-  - **Ready to Install:** Review your settings and click `Install` to proceed with the installation.
-  - **Completion:** Once the installation is complete, unselect the "Open with Powershell" checkbox and click `Finish` to close the installer.
-  - Open a new command prompt or PowerShell window with admin privileges [^1] and run the following command to verify the installation:
-   ```bash
-     nvm version
-   ```
-  
+  - **Ready to Install:** Verify your destination path is pointing to `C:\Users\$User\AppData\Roaming\nvm` and click `Install`.
+    - **Do not use the admin user's AppData folder, as this will cause permission issues.**
+  - **Completion:** Once the installation is complete, unselect the "Open with Powershell" checkbox, as this will open a PowerShell window with admin privileges, which is not what we're looking for this setup. Click `Finish` to complete the installation.
+  - Restart your computer to ensure the environment variables are updated otherwise environment variables won't be recognized in your non-admin user account.
+  - After the reboot, open a new command prompt or PowerShell window as a non-admin user and run the following command to verify the installation:
+     ```bash
+       nvm version
+     ```
 - Install node.js, npm and pnpm using NVM.
-  - In a command prompt (cmd) run the following command to install the latest LTS version of node.js and npm.[^1]
+  - In a non-admin command prompt (cmd) run the following command to install the latest LTS version of node.js and npm.
     ```bash
     nvm install lts
     ```
-  -  After the lts installation is complete, use the following command to set the installed version as the active version:
+  -  After the lts installation is complete, use the following command to set the installed version as the active version:[^1]
     ```bash
     nvm use lts
     ```
-  - Open a new bash terminal  to ensure the environment variables are updated. Avoid using a shell terminal on this step since npm commands might not be supported in shell. And verify the installation by 
-  confirming the versions of Node.js and npm:
+  - At this point, Node.js, npm, pnpm should be installed. You can verify the installation by running the following commands in a command prompt (cmd) terminal, avoid using PowerShell for this step since running `nvm` commands are disabled in PowerShell due to a organization policy.
     ```bash
     node -v
     ```
     ```bash
     npm -v
     ```
-  - If npm is not installed automatically, you can install it by running:
-    ```bash
-    nvm install-latest-npm
-    ```
+    - If npm is not installed automatically, you can install it by running:
+      ```bash
+      nvm install-latest-npm
+      ```
   - Now enable PNPM by Corepack running the following command. PNPM is triggered by Corepack in every build process, so it needs to be prepared and activated.
      ```bash
      corepack enable && corepack prepare pnpm@latest --activate
