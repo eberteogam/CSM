@@ -39,21 +39,21 @@ The current setup versions have been used to develop and test the project succes
 <br><br>
 - Before installing nvm, ensure there are no existing Node.js or npm installations on your system . If you previously installed Node.js (especially in C:\Program Files), uninstall it and remove any related paths from your system environment variables to avoid conflicts.
 - Download and install`nvm-setup.exe` (Node Version Manager) from [nvm-windows releases](https://github.com/coreybutler/nvm-windows/releases).
-- Execute the `nvm-setup.exe` installer [^1]
-  - License Agreement: Accept the license agreement and click `Next`.[^admin]
-  - Select Destination Location: **Important** select the installation path as `C:\Users\$User\AppData\Roaming\nvm` (where `$User` is your Windows username). This is crucial for the correct functioning of NVM.
-  - Active Version Location: Leave the symlink path as default `C:\nvm4w\nodejs`
-  - Desktop Notification: Select whether you want a desktop notifications or not, this is optional, it won't affect the installation.
-  - Author Progress Email: You can leave this field empty or fill it with your email address, this is optional, it won't affect the installation.
-  - Ready to Install: Review your settings and click `Install` to proceed with the installation.
-  - Completion: Once the installation is complete, click `Finish` and open a new terminal to verify the installation to confirm the version of NVM installed.
-    - It's important to open a new command prompt (cmd) or PowerShell window to ensure the environment variables are updated.
-    ```bash
-      nvm version
-    ```
+  - Execute the `nvm-setup.exe` installer. [^1]
+  - **License Agreement:** Accept the license agreement and click `Next`.
+  - **Select Destination Location:** Select the installation path as `C:\Users\$User\AppData\Roaming\nvm` (where `$User` is your Windows username). This is crucial for the correct functioning of NVM.
+  - **Active Version Location:** Leave the symlink path as default `C:\nvm4w\nodejs`.
+  - **Desktop Notification:** Select whether you want a desktop notifications or not, this is optional, it won't affect the installation.
+  - **Author Progress Email:** You can leave this field empty or fill it with your email address, this is optional, it won't affect the installation.
+  - **Ready to Install:** Review your settings and click `Install` to proceed with the installation.
+  - **Completion:** Once the installation is complete, unselect the "Open with Powershell" checkbox and click `Finish` to close the installer.
+  - Open a new command prompt or PowerShell window with admin privileges [^1] and run the following command to verify the installation:
+   ```bash
+     nvm version
+   ```
   
 - Install node.js, npm and pnpm using NVM.
-  - In a command prompt (cmd) run the following command to install node.js and npm. This will download and install the latest LTS version of Node.js.
+  - In a command prompt (cmd) run the following command to install the latest LTS version of node.js and npm.[^1]
     ```bash
     nvm install lts
     ```
@@ -132,7 +132,5 @@ git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
   - Corepack is a tool that allows you to use package managers like PNPM, Yarn, and NPM without needing to install them globally.
 - NVM allows you to manage multiple Node.js, npm, and PNPM versions on your system.
   - If you need to switch Node.js versions in the future, you can use `nvm use <version>`.
-  - ** This step requires admin privileges
-  
+
 [^1]: This step requires admin privileges
-[^admin]: This step requires **admin privileges**.
