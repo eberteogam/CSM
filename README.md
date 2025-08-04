@@ -9,13 +9,13 @@
 - Force push is disabled.
 
 ### Sections
-1. [Prerequisite Software](#1-install-prerequisite-software)
-2. [Tested Environment](#tested-environment)
-2. [Verify Installed Versions](#2-verify-installed-versions)
-3. [Building and Running the Solution](#3-building-and-running-the-solution)
+1. [Prerequisite Software](#1-prerequisite-software)
+2. [Tested Environment](#2-tested-environment)
+3. [Installation Steps](#3-installation-steps)
+4. [Setting Production Data and building the Project](#4-setting-production-data-and-building-the-project)
 
 ### 1. Prerequisite Software
-- [Microsoft Visual Studio 2022](...)
+- [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Enterprise&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
 - [Git for Windows < v.?](https://gitforwindows.org/)
 - [.NET SDK < v8.0](https://dotnet.microsoft.com/en-us/download)
 - [Node Version Manager (NVM) for Windows < v1.2.2](https://github.com/coreybutler/nvm-windows/releases)
@@ -83,7 +83,7 @@ The current setup versions have been used to develop and test the project succes
     pnpm -v
      ```
 
-## 3. Exporting Production Data
+## 4. Setting Production Data and building the Project
 - To simulate production data, start exporting the deployment packages from the production environment going to the `https://santamonica.gov/admin` website, modules > `Configuration > Import/Export` > `Deployment Plan`. 
 
 <br>![img_3.png](img_3.png)
