@@ -12,7 +12,7 @@
 1. [Prerequisite Software](#1-prerequisite-software)
 2. [Tested Environment](#2-tested-environment)
 3. [Installation Steps](#3-installation-steps)
-4. [Setting Production Data and building the Project](#4-setting-production-data-and-building-the-project)
+4. [Setting Production Data and building the Project](#4-setting-production-data-and-building-the-project.)
 
 ### 1. Prerequisite Software
 - [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Enterprise&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
