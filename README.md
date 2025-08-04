@@ -83,8 +83,50 @@ The current setup versions have been used to develop and test the project succes
     pnpm -v
      ```
 
-## 3.Setting the Database
-- This setup is based on Visual Studio 2022 and aims to use SQL Server Object Explorer for database management.
+## 3. Exporting Production Data
+- To simulate production data, start exporting the deployment packages from the production environment going to the `https://santamonica.gov/admin` website, modules > `Configuration > Import/Export` > `Deployment Plan`. 
+
+<br>![img_3.png](img_3.png)
+
+- Start downloading the `All Feaures` package, click on `Manage Steps` > `Execute` > `Select`. Execute the same steps for the following 26 deployment plans:
+
+      All Taxonomies
+      Blog Posts
+      CKAN KPIs
+      ContactInformationWidget
+      Cultural Venue
+      Data Definitions
+      Deployment Plans
+      Elections
+      Events 
+      Features
+      Filtered List Headers
+      Local Business
+      Local Business Categories
+      Menu's
+      News Author
+      Pages
+      Parking Lots
+      Places
+      Press Releases
+      Process Explainers
+      Profiles
+      Programs
+      Promotions
+      Recent Published Local Business
+      Topic Explainers
+- ### Cloning
+  - Now it's time to clone the santamonica.gov.core repository to your local environment,
+    santamonica.gov.core Github repository to your local environment. From santamonica.gov.core repository,
+    select `<> Code` dropdown and copy the HTTPS URL address. In your local environment, open a command prompt in the directory
+    where you want to clone the repository and run the following command:
+```bash
+git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
+```
+
+
+
+-  based on Visual Studio 2022 and aims to use SQL Server Object Explorer for database management.
 - Go to `View` > `SQL Server Object Explorer` in Visual Studio.
 - ### Option 1: Using the default Orchard Core Credentials for admin access
   - The repository is configured to automatically map to a local SQL Server instance through the `appsettings.Development.json` file.
@@ -104,13 +146,7 @@ The current setup versions have been used to develop and test the project succes
 
 ## 4. Cloning, Building and Running the Project
 - ### Cloning
-  - Start cloning santamonica.gov.core Github repository to your local environment. From santamonica.gov.core repository,
-    select `<> Code` dropdown and copy the HTTPS URL address. In your local environment, open a command prompt in the directory
-    where you want to clone the repository and run the following command:
-```bash
-git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
-```
-
+  
 - ### Building and Running
   -   ### Option 1: Build using VS IDE
 - Open Visual Studio start window, under Get started select Clone a repository. Paste the previously copied git location under Repository Location field. Specify a path and then click on Clone.
