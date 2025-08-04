@@ -115,54 +115,41 @@ The current setup versions have been used to develop and test the project succes
       Promotions
       Recent Published Local Business
       Topic Explainers
+
 - ### Cloning
-  - Now it's time to clone the santamonica.gov.core repository to your local environment,
-    santamonica.gov.core Github repository to your local environment. From santamonica.gov.core repository,
-    select `<> Code` dropdown and copy the HTTPS URL address. In your local environment, open a command prompt in the directory
-    where you want to clone the repository and run the following command:
-```bash
-git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
-```
-
-
-
--  based on Visual Studio 2022 and aims to use SQL Server Object Explorer for database management.
-- Go to `View` > `SQL Server Object Explorer` in Visual Studio.
-- ### Option 1: Using the default Orchard Core Credentials for admin access
-  - The repository is configured to automatically map to a local SQL Server instance through the `appsettings.Development.json` file.
-  - In your local environment, ensure you have SQL Server Management Studio (SSMS) or any other SQL client installed.
-    Open SSMS and connect to your local SQL Server instance using the following credentials, after it press `Connect`:
-    - `Server Type:` Database Engine
-    - `Server Name:`(localdb)\MSSQLLocalDB
-    - `Authentication:` Windows Authentication`
+  - Now it's time to clone the santamonica.gov.core repository in our local environment. Having git installed, run the following command.
+  ```bash
+  git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
+  ```
+- Open Visual Studio 2022 and click on `Open a project or new folder`. Navigate where you cloned the repository and select the folder to open the project.
+- Before building the project, let's verify the database connection and ensure the database is set up correctly. For this documentation, we have used the MySQL Server LocalDB approach.
+- Open the file `src/Orchard.Web/appsettings.Development.json` in Visual Studio. 
+  - This file contains the auto setup database connection step for the local development environment 
+  - This file also contains the database credentials for the admin user that will be later used to log in to the admin panel of the application to import the production data.
+- Within the file, look for the `DatabaseProvider` key and ensure it is set to `SqlServer`. This indicates that the project is configured to use SQL Server as the database provider. Orchard supports database providers like `MySql`, `PostgreSql`, or `Sqlite` by changing the value of this key accordingly.
+- By default, the `DatabaseProvider` key is set to use SQL Server LocalDB. Knowing that, we can proceed to build and run the project.
+- Open a terminal within Visual Studio or use a command prompt (cmd) in the project directory and run the following command to restore the NuGet packages:
+  - Don't run this command in PowerShell, as pnpm is not supported in PowerShell due to an organization policy.
+  
+    ```bash
+    dotnet run --project src/Orchard.Web/Orchard.Web.csproj
+    ```
+ 
+- The application will be hosted on:
+  - `http://localhost:8080`
+  - `https://localhost:44300`
+  
+- ### Preview data using SQL Server Object Explorer
+- To preview the data in the database, you can use SQL Server Object Explorer in Visual Studio. Follow these steps:
+- Open Visual Studio and go to `View > SQL Server Object Explorer`.
+- In the SQL Server Object Explorer, right-click on `SQL Server` and select `Add SQL Server`.
+- In the `Connect to Server` dialog, enter the following details:
+- `Server Name:` `(localdb)\MSSQLLocalDB`
+- `Authentication:` `Windows Authentication`
+- Click `Connect`.
+- Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.
 
     <br><br><br>
-
-    ![img.png](img.png)
-    - Once connected, create a new database named `santamonica.gov`(See Iron Mountain ScreenShots for naming conventions).
-
-- ### Option 2: Using the Orchard Core Setup Database
-  - Delete the `appsettings.Development.json` file in the `src/Orchard.Web` directory. This will force the application to use the default Orchard Core setup database.
-
-## 4. Cloning, Building and Running the Project
-- ### Cloning
-  
-- ### Building and Running
-  -   ### Option 1: Build using VS IDE
-- Open Visual Studio start window, under Get started select Clone a repository. Paste the previously copied git location under Repository Location field. Specify a path and then click on Clone.
-- Navigate to the parent directory of the project and build/run it. The application will be hosted on:
-  - `https://localhost:44300`
-  - `http://localhost:8080`
-
-### Option 2: Build using CLI
-- Navigate to the parent directory of the project. And run the following command:
-  ```bash
-  dotnet run --project src/Orchard.Web/Orchard.Web.csproj
-  ```
-- The application will be hosted on:
-  - `https://localhost:5000`
-  - `http://localhost:5001`
-
 *Notes*: 
 - PNPM is triggered by Corepack during every build. 
   - PNPM is a package manager that helps manage project dependencies efficiently.
