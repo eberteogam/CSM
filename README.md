@@ -13,6 +13,7 @@
 2. [Tested Environment](#2-tested-environment)
 3. [Installation Steps](#3-installation-steps)
 4. [Setting Production Data and building the Project](#4-setting-production-data-and-building-the-project.)
+5. [Importing data](#5-importing-data)
 
 ### 1. Prerequisite Software
 - [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Enterprise&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
@@ -84,61 +85,39 @@ The current setup versions have been used to develop and test the project succes
      ```
 
 ## 4. Setting Production Data and building the Project
-- To simulate production data, start exporting the deployment packages from the production environment going to the `https://santamonica.gov/admin` website, modules > `Configuration > Import/Export` > `Deployment Plan`. 
+- ### Exporting data
+  - For this test, we will simulate the bare minimum production data that is required to run the santamonica.gov website. From there on, you can add more data as you need it.
+  - Go to `https://santamonica.gov/admin` website, within the modules go to `> Configuration > Import/Export > Deployment Plan`.
+- Search for the `Top Menu items and Footer` deployment package, once found it, click on `Manage Steps` > `Execute` > `Select`. This will download the deployment package to your local machine.
 
-<br>![img_3.png](img_3.png)
+- ### Clone & Build SMC Repository
+  - Before importing the production data, we need to clone the santamonica.gov.core repository and build the project, since the deployment package is imported using the admin panel of the application.
+  - Clone the [santamonica.gov.core repository](https://github.com/CityofSantaMonica/santamonica.gov.core) in your local environment. Having git installed, run the following command.
+      ```bash
+      git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
+      ```
+  - Open Visual Studio 2022, click on `Open a project or new folder`. Navigate where you cloned the repository and select the folder to open the project.
+  - Before building the project, let's verify the database connection and ensure the database is set up correctly. For this documentation, we have used a SQLite approach due to the automatic setup of the database connection.
+    - Within Visual Studio, open the file `src/Orchard.Web/appsettings.Development.json`. This file contains the auto setup database connection step for the local development environment 
+    - This file also contains the database credentials for the admin user that will be later used to log in to the admin panel of the application to import the production data.
+    - Within the file, look for the `DatabaseProvider` key and ensure it is set to `Sqlite`. This indicates that the project is configured to use SQLite as the database provider for local development. Orchard supports database providers like `MySql`, `PostgreSql`, or `Sqlite` by changing the value of this key accordingly, however, the setup might vary based on the db provider you choose.
+  - Now open a terminal within Visual Studio or use a command prompt (cmd) in the project directory and run the following command. Don't run the following command in PowerShell, as pnpm is not supported in PowerShell due to an organization policy.
 
-- Start downloading the `All Feaures` package, click on `Manage Steps` > `Execute` > `Select`. Execute the same steps for the following 26 deployment plans:
-
-      All Taxonomies
-      Blog Posts
-      CKAN KPIs
-      ContactInformationWidget
-      Cultural Venue
-      Data Definitions
-      Deployment Plans
-      Elections
-      Events 
-      Features
-      Filtered List Headers
-      Local Business
-      Local Business Categories
-      Menu's
-      News Author
-      Pages
-      Parking Lots
-      Places
-      Press Releases
-      Process Explainers
-      Profiles
-      Programs
-      Promotions
-      Recent Published Local Business
-      Topic Explainers
-
-- ### Cloning
-  - Now it's time to clone the santamonica.gov.core repository in our local environment. Having git installed, run the following command.
-  ```bash
-  git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
+- ```bash
+  dotnet run --project src/Orchard.Web/Orchard.Web.csproj
   ```
-- Open Visual Studio 2022 and click on `Open a project or new folder`. Navigate where you cloned the repository and select the folder to open the project.
-- Before building the project, let's verify the database connection and ensure the database is set up correctly. For this documentation, we have used the MySQL Server LocalDB approach.
-- Open the file `src/Orchard.Web/appsettings.Development.json` in Visual Studio. 
-  - This file contains the auto setup database connection step for the local development environment 
-  - This file also contains the database credentials for the admin user that will be later used to log in to the admin panel of the application to import the production data.
-- Within the file, look for the `DatabaseProvider` key and ensure it is set to `SqlServer`. This indicates that the project is configured to use SQL Server as the database provider. Orchard supports database providers like `MySql`, `PostgreSql`, or `Sqlite` by changing the value of this key accordingly.
-- By default, the `DatabaseProvider` key is set to use SQL Server LocalDB. Knowing that, we can proceed to build and run the project.
-- Open a terminal within Visual Studio or use a command prompt (cmd) in the project directory and run the following command to restore the NuGet packages:
-  - Don't run this command in PowerShell, as pnpm is not supported in PowerShell due to an organization policy.
-  
-    ```bash
-    dotnet run --project src/Orchard.Web/Orchard.Web.csproj
-    ```
  
-- The application will be hosted on:
+- The application will start running on the default ports, which are typically:
   - `http://localhost:8080`
   - `https://localhost:44300`
   
+- At this point, the application should be running, and the database should have been set up automatically using SQLite. Tables and data seeding should have been performed automatically by the application during the build process and the legacy views should be available in the database.
+  
+## 5. Importing data
+- With the application running in localhost, you can now import the latest production data that you exported earlier.
+- Navigate to `https://localhost:44300/admin` in your web browser and within the modules go to `> Configuration > Import/Export > Package Import`.
+- Click on `Import` and select the deployment package (.zip folder) you downloaded earlier.
+
 - ### Preview data using SQL Server Object Explorer
 - To preview the data in the database, you can use SQL Server Object Explorer in Visual Studio. Follow these steps:
 - Open Visual Studio and go to `View > SQL Server Object Explorer`.
@@ -149,7 +128,6 @@ The current setup versions have been used to develop and test the project succes
 - Click `Connect`.
 - Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.
 
-    <br><br><br>
 *Notes*: 
 - PNPM is triggered by Corepack during every build. 
   - PNPM is a package manager that helps manage project dependencies efficiently.
