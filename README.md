@@ -60,32 +60,32 @@ nvm version
 ```
 - Install node.js, npm and pnpm using NVM.
   - In a non-admin command prompt (cmd) run the following command to install the latest LTS version of node.js and npm.
-    ```bash
+```bash
     nvm install lts
-    ```
+```
   -  After the lts installation is complete, use the following command to set the installed version as the active version:[^1]
-    ```bash
+```bash
     nvm use lts
-    ```
+```
   - At this point, Node.js, npm, pnpm should be installed. You can verify the installation by running the following commands in a command prompt (cmd) terminal, avoid using PowerShell for this step since running `pnpm` commands are disabled in PowerShell due to a organization policy.
-    ```bash
+```bash
     node -v
-    ```
-    ```bash
+```
+```bash
     npm -v
-    ```
-    - If npm is not installed automatically, you can install it by running:
-      ```bash
-      nvm install-latest-npm
-      ```
+```
+  - If npm is not installed automatically, you can install it by running:
+```bash
+    nvm install-latest-npm
+```
   - Now enable PNPM by Corepack running the following command. PNPM is triggered by Corepack in every build process, so it needs to be prepared and activated.
-     ```bash
+ ```bash
      corepack enable && corepack prepare pnpm@latest --activate
-     ```
+ ```
   - Verify the PNPM installation by running:
-    ```bash
+```bash
     pnpm -v
-     ```
+ ```
 
 ## 4. Setting Production Data and building the Project
 - ### Exporting data
@@ -96,9 +96,9 @@ nvm version
 - ### Clone & Build SMC Repository
   - Before importing the production data, we need to clone the santamonica.gov.core repository and build the project, since the deployment package is imported using the admin panel of the application.
   - Clone the [santamonica.gov.core repository](https://github.com/CityofSantaMonica/santamonica.gov.core) in your local environment. Having git installed, run the following command.
-      ```bash
-      git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
-      ```
+```bash
+git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
+```
   - Open Visual Studio 2022, click on `Open a project or new folder`. Navigate where you cloned the repository and select the folder to open the project.
   - Before building the project, let's verify the database connection and ensure the database is set up correctly. For this documentation, we have used a SQLite approach due to the automatic setup of the database connection.
     - Within Visual Studio, open the file `src/Orchard.Web/appsettings.Development.json`. This file contains the auto setup database connection step for the local development environment 
@@ -106,30 +106,30 @@ nvm version
     - Within the file, look for the `DatabaseProvider` key and ensure it is set to `Sqlite`. This indicates that the project is configured to use SQLite as the database provider for local development. Orchard supports database providers like `MySql`, `PostgreSql`, or `Sqlite` by changing the value of this key accordingly, however, the setup might vary based on the db provider you choose.
   - Now open a terminal within Visual Studio or use a command prompt (cmd) in the project directory and run the following command. Don't run the following command in PowerShell, as pnpm is not supported in PowerShell due to an organization policy.
 
-- ```bash
+```bash
   dotnet run --project src/Orchard.Web/Orchard.Web.csproj
-  ```
+```
  
 - The application will start running on the default ports, which are typically:
   - `http://localhost:8080`
   - `https://localhost:44300`
-  
+
 - At this point, the application should be running, and the database should have been set up automatically using SQLite. Tables and data seeding should have been performed automatically by the application during the build process and the legacy views should be available in the database.
-  
+
 ## 5. Importing data
 - With the application running in localhost, you can now import the latest production data that you exported earlier.
 - Navigate to `https://localhost:44300/admin` in your web browser and within the modules go to `> Configuration > Import/Export > Package Import`.
 - Click on `Import` and select the deployment package (.zip folder) you downloaded earlier.
 
-- ### Preview data using SQL Server Object Explorer
-- To preview the data in the database, you can use SQL Server Object Explorer in Visual Studio. Follow these steps:
-- Open Visual Studio and go to `View > SQL Server Object Explorer`.
-- In the SQL Server Object Explorer, right-click on `SQL Server` and select `Add SQL Server`.
-- In the `Connect to Server` dialog, enter the following details:
-- `Server Name:` `(localdb)\MSSQLLocalDB`
-- `Authentication:` `Windows Authentication`
-- Click `Connect`.
-- Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.
+[//]: # (- ### Preview data using SQL Server Object Explorer)
+[//]: # (- To preview the data in the database, you can use SQL Server Object Explorer in Visual Studio. Follow these steps:)
+[//]: # (- Open Visual Studio and go to `View > SQL Server Object Explorer`.)
+[//]: # (- In the SQL Server Object Explorer, right-click on `SQL Server` and select `Add SQL Server`.)
+[//]: # (- In the `Connect to Server` dialog, enter the following details:)
+[//]: # (- `Server Name:` `&#40;localdb&#41;\MSSQLLocalDB`)
+[//]: # (- `Authentication:` `Windows Authentication`)
+[//]: # (- Click `Connect`.)
+[//]: # (- Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.)
 
 *Notes*: 
 - PNPM is triggered by Corepack during every build. 
