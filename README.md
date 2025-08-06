@@ -17,12 +17,15 @@
 
 ### 1. Prerequisite Software
 - [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Enterprise&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
-- [Git for Windows < v.?](https://gitforwindows.org/)
-- [.NET SDK < v8.0](https://dotnet.microsoft.com/en-us/download)
+- [Git for Windows](https://gitforwindows.org/)
+- [.NET SDK < v6.0](https://dotnet.microsoft.com/en-us/download)
 - [Node Version Manager (NVM) for Windows < v1.2.2](https://github.com/coreybutler/nvm-windows/releases)
-  - node.js < v? (installed via NVM)
-  - npm < v? (installed via NVM)
-  - pnpm < v? (installed via Corepack)
+- 
+  - node.js < v.18 (installed via NVM)
+  - npm (installed via NVM) 
+    - Note: NPM is not really required for the project, but it is bundled with the node.js installation.
+  - pnpm < v.8 (installed via Corepack)
+  - Note: Orchard Core by itself does not require node.js, npm, nor pnpm. The only one that does require is Lombiq Node.js Extensions, plugin, used when building the project.
 
 ### 2. Tested Environment
 The current setup versions have been used to develop and test the project successfully.
@@ -43,18 +46,18 @@ The current setup versions have been used to develop and test the project succes
   - Execute the `nvm-setup.exe` installer. [^1]
   - **License Agreement:** Accept the license agreement and click `Next`.
   - **Select Destination Location:** Select the installation path as `C:\Users\$User\AppData\Roaming\nvm` (where `$User` is your non-admin Windows username). 
-    - **Do not use the admin user's AppData folder, as this will cause permission issues.** 
+    - **Do not use the Windows admin user's AppData folder, as this will cause permission issues.** 
   - **Active Version Location:** Leave the symlink path as default `C:\nvm4w\nodejs`.
   - **Desktop Notification:** Select whether you want a desktop notifications or not, this is optional, it won't affect the installation.
   - **Author Progress Email:** You can leave this field empty or fill it with your email address, this is optional, it won't affect the installation.
   - **Ready to Install:** Verify your destination path is pointing to `C:\Users\$User\AppData\Roaming\nvm` and click `Install`.
-    - **Do not use the admin user's AppData folder, as this will cause permission issues.**
+    - **Do not use the Windows admin user's AppData folder, as this will cause permission issues.**
   - **Completion:** Once the installation is complete, unselect the "Open with Powershell" checkbox, as this will open a PowerShell window with admin privileges, which is not what we're looking for this setup. Click `Finish` to complete the installation.
-  - Restart your computer to ensure the environment variables are updated otherwise environment variables won't be recognized in your non-admin user account.
-  - After the reboot, open a new command prompt or PowerShell window as a non-admin user and run the following command to verify the installation:
-     ```bash
-       nvm version
-     ```
+- Restart your computer to ensure the environment variables are updated otherwise environment variables won't be recognized in your non-admin user account.
+- After the reboot, open a new command prompt or PowerShell window as a non-admin user and run the following command to verify the installation:
+   ```bash
+     nvm version
+   ```
 - Install node.js, npm and pnpm using NVM.
   - In a non-admin command prompt (cmd) run the following command to install the latest LTS version of node.js and npm.
     ```bash
@@ -64,7 +67,7 @@ The current setup versions have been used to develop and test the project succes
     ```bash
     nvm use lts
     ```
-  - At this point, Node.js, npm, pnpm should be installed. You can verify the installation by running the following commands in a command prompt (cmd) terminal, avoid using PowerShell for this step since running `nvm` commands are disabled in PowerShell due to a organization policy.
+  - At this point, Node.js, npm, pnpm should be installed. You can verify the installation by running the following commands in a command prompt (cmd) terminal, avoid using PowerShell for this step since running `pnpm` commands are disabled in PowerShell due to a organization policy.
     ```bash
     node -v
     ```
