@@ -17,7 +17,7 @@
    - [Cloning the Repository](#cloning-the-repository)
    - [Building the Repository](#building-the-repository)
 5. [Importing data](#5-importing-data)
-- [Preview the DB withing VS2022 using a SQLite extension](#preview-data-using-sql-server-object-explorer)
+- [Preview the DB within VS2022 using a SQLite extension](#preview-the-db-within-vs2022-using-a-sqlite-extension)
 - [Notes](#notes)
 
 ---
@@ -158,4 +158,5 @@ dotnet run --project src/Orchard.Web/Orchard.Web.csproj
     - Corepack is a tool that allows you to use package managers like PNPM, Yarn, and NPM without needing to install them globally.
 - NVM allows you to manage multiple Node.js, npm, and PNPM versions on your system.
     - If you need to switch Node.js versions in the future, you can use `nvm use <version>`.
-- [^1]: This step requires admin privileges
+  
+[^1]: This step requires admin privileges
