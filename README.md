@@ -25,7 +25,7 @@
   - npm (installed via NVM) 
     - Note: NPM is not really required for the project, but it is bundled with the node.js installation.
   - pnpm < v.8 (installed via Corepack)
-  - Note: Orchard Core by itself does not require node.js, npm, nor pnpm. The only one that does require is Lombiq Node.js Extensions, plugin, used when building the project.
+  - Note: Orchard Core by itself does not require node.js nor pnpm. The only one that does require them is Lombiq Node.js Extension, plugin used when building the project.
 
 ### 2. Tested Environment
 The current setup versions have been used to develop and test the project successfully.
@@ -55,9 +55,9 @@ The current setup versions have been used to develop and test the project succes
   - **Completion:** Once the installation is complete, unselect the "Open with Powershell" checkbox, as this will open a PowerShell window with admin privileges, which is not what we're looking for this setup. Click `Finish` to complete the installation.
 - Restart your computer to ensure the environment variables are updated otherwise environment variables won't be recognized in your non-admin user account.
 - After the reboot, open a new command prompt or PowerShell window as a non-admin user and run the following command to verify the installation:
-   ```bash
-     nvm version
-   ```
+```bash
+nvm version
+```
 - Install node.js, npm and pnpm using NVM.
   - In a non-admin command prompt (cmd) run the following command to install the latest LTS version of node.js and npm.
     ```bash
