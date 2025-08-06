@@ -1,6 +1,6 @@
 # Orchard 2.1.7 Local Environment Setup for SMC Employees on SMC-Issued Laptops (Admin Needed for Install, Not Build)
 
-- This guide provides step-by-step instructions to set up a local development environment for Orchard 2.1.7 on a Windows system using NuGet Packages. Note that while the software can be installed without admin privileges, certain steps may require admin access.
+- This guide walks SMC employees through setting up a local Orchard 2.1.7 development environment on SMC-issued Windows laptops using NuGet packages. While building the project doesn't require admin privileges, installation steps do.
 
 ### Development guidelines
 - The main branch of the repository is the `dev` branch. Always start your development branch from there and open your pull requests targeting this branch, unless instructed otherwise (e.g., it's part of a larger feature development).
@@ -12,8 +12,15 @@
 1. [Prerequisite Software](#1-prerequisite-software)
 2. [Tested Environment](#2-tested-environment)
 3. [Installation Steps](#3-installation-steps)
-4. [Setting Production Data and building the Project](#4-setting-production-data-and-building-the-project.)
+4. [Setting Production Data and building the Project](#4-setting-production-data-and-building-the-project)
+   - [Exporting data](#exporting-data)
+   - [Cloning the Repository](#cloning-the-repository)
+   - [Building the Repository](#building-the-repository)
 5. [Importing data](#5-importing-data)
+---
+- [Notes](#notes)
+- [Preview DB using a SQLite extension within VS2022](#preview-data-using-sql-server-object-explorer)
+
 
 ### 1. Prerequisite Software
 - [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Enterprise&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
@@ -25,7 +32,7 @@
     - npm (installed via NVM)
         - Note: NPM is not really required for the project, but it is bundled with the node.js installation.
     - pnpm < v.8 (installed via Corepack)
-    - Note: Orchard Core by itself does not require node.js nor pnpm. The only one that does require them is Lombiq Node.js Extension, plugin used when building the project.
+    - Note: Orchard Core by itself does not require node.js nor pnpm. The only one that does require them is Lombiq Node.js Extension (plugin) used when building the project.
 
 ### 2. Tested Environment
 The current setup versions have been used to develop and test the project successfully.
@@ -37,11 +44,14 @@ The current setup versions have been used to develop and test the project succes
     - PNPM `v7.15.0` (installed via Corepack with NVM)
 
 ### 3. Installation Steps
-- Download and install git for Windows from [git](https://gitforwindows.org/).
+- Download and install [git for Windows](https://gitforwindows.org/).
   <br><br>
 - Download and install .NET SDK `< v8.0` from [dotnet-sdk.exe](https://dotnet.microsoft.com/en-us/download).
   <br><br>
-- Before installing nvm, ensure there are no existing Node.js or npm installations on your system . If you previously installed Node.js (especially in C:\Program Files), uninstall it and remove any related paths from your system environment variables to avoid conflicts.
+- Download and install Microsoft Visual Studio 2022 from [Visual Studio Downloads](https://visualstudio.microsoft.com/downloads/).
+    - During the Visual Studio installation, you don't need to select any additional workloads.
+<br><br>
+- Before downloading and installing nvm, ensure there are no existing Node.js or npm installations on your system . If you previously installed Node.js (especially in C:\Program Files), uninstall it and remove any related paths from your system environment variables to avoid conflicts.
 - Download and install`nvm-setup.exe` (Node Version Manager) from [nvm-windows releases](https://github.com/coreybutler/nvm-windows/releases).
     - Execute the `nvm-setup.exe` installer. [^1]
     - **License Agreement:** Accept the license agreement and click `Next`.
@@ -61,44 +71,45 @@ nvm version
 - Install node.js, npm and pnpm using NVM.
     - In a non-admin command prompt (cmd) run the following command to install the latest LTS version of node.js and npm.
 ```bash
-    nvm install lts
+nvm install lts
 ```
 -  After the lts installation is complete, use the following command to set the installed version as the active version:[^1]
 ```bash
-    nvm use lts
+nvm use lts
 ```
 - At this point, Node.js, npm, pnpm should be installed. You can verify the installation by running the following commands in a command prompt (cmd) terminal, avoid using PowerShell for this step since running `pnpm` commands are disabled in PowerShell due to a organization policy.
 ```bash
-    node -v
+node -v
 ```
 ```bash
-    npm -v
+npm -v
 ```
 - If npm is not installed automatically, you can install it by running:
 ```bash
-    nvm install-latest-npm
+nvm install-latest-npm
 ```
 - Now enable PNPM by Corepack running the following command. PNPM is triggered by Corepack in every build process, so it needs to be prepared and activated.
  ```bash
-     corepack enable && corepack prepare pnpm@latest --activate
+corepack enable && corepack prepare pnpm@latest --activate
  ```
 - Verify the PNPM installation by running:
 ```bash
-    pnpm -v
+pnpm -v
  ```
 
-## 4. Setting Production Data and building the Project
+### 4. Setting Production Data and building the Project
 - ### Exporting data
     - For this test, we will simulate the bare minimum production data that is required to run the santamonica.gov website. From there on, you can add more data as you need it.
     - Go to `https://santamonica.gov/admin` website, within the modules go to `> Configuration > Import/Export > Deployment Plan`.
 - Search for the `Top Menu items and Footer` deployment package, once found it, click on `Manage Steps` > `Execute` > `Select`. This will download the deployment package to your local machine.
 
-- ### Clone & Build SMC Repository
+- ### Cloning the Repository
     - Before importing the production data, we need to clone the santamonica.gov.core repository and build the project, since the deployment package is imported using the admin panel of the application.
     - Clone the [santamonica.gov.core repository](https://github.com/CityofSantaMonica/santamonica.gov.core) in your local environment. Having git installed, run the following command.
 ```bash
 git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
 ```
+- ### Building the Repository
 - Open Visual Studio 2022, click on `Open a project or new folder`. Navigate where you cloned the repository and select the folder to open the project.
 - Before building the project, let's verify the database connection and ensure the database is set up correctly. For this documentation, we have used a SQLite approach due to the automatic setup of the database connection.
     - Within Visual Studio, open the file `src/Orchard.Web/appsettings.Development.json`. This file contains the auto setup database connection step for the local development environment
@@ -107,7 +118,7 @@ git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
 - Now open a terminal within Visual Studio or use a command prompt (cmd) in the project directory and run the following command. Don't run the following command in PowerShell, as pnpm is not supported in PowerShell due to an organization policy.
 
 ```bash
-  dotnet run --project src/Orchard.Web/Orchard.Web.csproj
+dotnet run --project src/Orchard.Web/Orchard.Web.csproj
 ```
 
 - The application will start running on the default ports, which are typically:
@@ -121,15 +132,15 @@ git clone https://github.com/CityofSantaMonica/santamonica.gov.core.git
 - Navigate to `https://localhost:44300/admin` in your web browser and within the modules go to `> Configuration > Import/Export > Package Import`.
 - Click on `Import` and select the deployment package (.zip folder) you downloaded earlier.
 
-[//]: # (- ### Preview data using SQL Server Object Explorer)
-[//]: # (- To preview the data in the database, you can use SQL Server Object Explorer in Visual Studio. Follow these steps:)
-[//]: # (- Open Visual Studio and go to `View > SQL Server Object Explorer`.)
-[//]: # (- In the SQL Server Object Explorer, right-click on `SQL Server` and select `Add SQL Server`.)
-[//]: # (- In the `Connect to Server` dialog, enter the following details:)
-[//]: # (- `Server Name:` `&#40;localdb&#41;\MSSQLLocalDB`)
-[//]: # (- `Authentication:` `Windows Authentication`)
-[//]: # (- Click `Connect`.)
-[//]: # (- Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.)
+### Preview data using SQL Server Object Explorer
+- To preview the data in the database, you can use SQL Server Object Explorer in Visual Studio. Follow these steps:
+- Open Visual Studio and go to `View > SQL Server Object Explorer`.
+- In the SQL Server Object Explorer, right-click on `SQL Server` and select `Add SQL Server`.
+- In the `Connect to Server` dialog, enter the following details:
+- `Server Name:` `(localdb)\MSSQLLocalDB`
+- `Authentication:` `Windows Authentication`
+- Click `Connect`.
+- Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.
 
 *Notes*:
 - PNPM is triggered by Corepack during every build.
