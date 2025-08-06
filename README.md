@@ -137,6 +137,7 @@ dotnet run --project src/Orchard.Web/Orchard.Web.csproj
 - To preview the database within Visual Studio 2022, we have to install a SQLite extension since VS2022 does not support SQLite by default.
 - Go to `Extensions > Manage Extensions` and search for `SQLite and SQL Server Compact Toolbox`.
 - Install the extension and restart Visual Studio 2022.
+  - After closing VS2022, you will prompted to introduce your admin credentials to complete the installation of the extension. [^1]
 - Go to `Tools > SQLite/SQL Server Compact Toolbox` to open the toolbox.
 - In the toolbox, right-click on `Data Connections` and select `Add SQLite Connection`.
 - In the `Add SQLite Connection` window, enter the following details:
