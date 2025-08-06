@@ -1,6 +1,6 @@
 # Orchard 2.1.7 Local Environment Setup for SMC Employees on SMC-Issued Laptops (Admin Needed for Install, Not Build)
 
-- This guide walks SMC employees through setting up a local Orchard 2.1.7 development environment on SMC-issued Windows laptops using NuGet packages. While building the project doesn't require admin privileges, installation steps do.
+- This guide walks SMC employees through setting up a local Orchard 2.1.7 development environment on SMC-issued Windows laptops using NuGet packages. While building the project doesn't require admin privileges, installation steps do. In the local setup, SQLite is used to preview data by default due to the auto-setup configuration, whereas MySQL is used in the production environment.
 
 ### Development guidelines
 - The main branch of the repository is the `dev` branch. Always start your development branch from there and open your pull requests targeting this branch, unless instructed otherwise (e.g., it's part of a larger feature development).
@@ -17,10 +17,10 @@
    - [Cloning the Repository](#cloning-the-repository)
    - [Building the Repository](#building-the-repository)
 5. [Importing data](#5-importing-data)
----
+- [Preview the DB withing VS2022 using a SQLite extension](#preview-data-using-sql-server-object-explorer)
 - [Notes](#notes)
-- [Preview DB using a SQLite extension within VS2022](#preview-data-using-sql-server-object-explorer)
 
+---
 
 ### 1. Prerequisite Software
 - [Microsoft Visual Studio 2022](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Enterprise&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false)
@@ -131,22 +131,31 @@ dotnet run --project src/Orchard.Web/Orchard.Web.csproj
 - With the application running in localhost, you can now import the latest production data that you exported earlier.
 - Navigate to `https://localhost:44300/admin` in your web browser and within the modules go to `> Configuration > Import/Export > Package Import`.
 - Click on `Import` and select the deployment package (.zip folder) you downloaded earlier.
+- Once the import is complete, you should see a success message indicating that the deployment package has been imported successfully.
+  
+## *Preview the DB within VS2022 using a SQLite extension*
+- To preview the database within Visual Studio 2022, we have to install a SQLite extension since VS2022 does not support SQLite by default.
+- Go to `Extensions > Manage Extensions` and search for `SQLite and SQL Server Compact Toolbox`.
+- Install the extension and restart Visual Studio 2022.
+- Go to `Tools > SQLite/SQL Server Compact Toolbox` to open the toolbox.
+- In the toolbox, right-click on `Data Connections` and select `Add SQLite Connection`.
+- In the `Add SQLite Connection` window, enter the following details:
+    - **Data Source:** `Project Directory\src\Orchard.Web\App_Data\OrchardCore.db`
+        - Replace `Project Directory` with the actual path to your cloned repository.
+    - Click the `Close` bottom at the bottom of the window. Do not click the `Close` button in the top-right corner — that will close the window without adding the connection.
 
-### Preview data using SQL Server Object Explorer
-- To preview the data in the database, you can use SQL Server Object Explorer in Visual Studio. Follow these steps:
-- Open Visual Studio and go to `View > SQL Server Object Explorer`.
-- In the SQL Server Object Explorer, right-click on `SQL Server` and select `Add SQL Server`.
-- In the `Connect to Server` dialog, enter the following details:
-- `Server Name:` `(localdb)\MSSQLLocalDB`
-- `Authentication:` `Windows Authentication`
-- Click `Connect`.
-- Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.
+[//]: # (- Open Visual Studio and go to `View > SQL Server Object Explorer`.)
+[//]: # (- In the SQL Server Object Explorer, right-click on `SQL Server` and select `Add SQL Server`.)
+[//]: # (- In the `Connect to Server` dialog, enter the following details:)
+[//]: # (- `Server Name:` `&#40;localdb&#41;\MSSQLLocalDB`)
+[//]: # (- `Authentication:` `Windows Authentication`)
+[//]: # (- Click `Connect`.)
+[//]: # (- Once connected, you should see the SQL Server LocalDB instance in the SQL Server Object Explorer. You can expand the `Databases` node to see the databases available on your local instance.)
 
-*Notes*:
+## *Notes*:
 - PNPM is triggered by Corepack during every build.
     - PNPM is a package manager that helps manage project dependencies efficiently.
     - Corepack is a tool that allows you to use package managers like PNPM, Yarn, and NPM without needing to install them globally.
 - NVM allows you to manage multiple Node.js, npm, and PNPM versions on your system.
     - If you need to switch Node.js versions in the future, you can use `nvm use <version>`.
-
-[^1]: This step requires admin privileges
+- [^1]: This step requires admin privileges
